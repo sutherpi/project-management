@@ -160,7 +160,7 @@ for question in questions:
 #character.eat(snacks['DILL PICKLE'])
 
 # practice
-for snack in snacks:
+for snack in snacks: #h
     # access object via str key
     snack = snacks[snack]
 
