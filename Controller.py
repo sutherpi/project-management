@@ -46,5 +46,3 @@ class GameController():
         ' update console based on item selected '
         pass
 
-
-
