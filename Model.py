@@ -153,18 +153,26 @@ questions = {
     ['The US Army', 'Spam', 'Wholefoods', 'Popeye\'s'], 'Wholefoods')
 }
 
-for question in questions:
-    print(question, questions[question].answer)
-
 # populate board, randomized
-#character.eat(snacks['DILL PICKLE'])
+rows = [x for x in range(0, 10)]
+columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
+board = {}
+
+for row in range(0, len(rows)):
+    for column in range(0, len(columns)):
+        coord = f'{rows[row]} : {columns[column]}'
+        board[coord] = ''
+
+for i in range(0, len(rows)):
+    print(i)
 
 # practice
+'''
 for snack in snacks:
     # access object via str key
     snack = snacks[snack]
 
-    print(f'{snack.name} consumed! Your Stamina is now: {snack.regen + character.stamina}\n')
+    print(f'{snack.name} consumed! Your Stamina is now: {snack.regen + character.stamina}\n')'''
 
 # practice adding 2 inventory
 #character.inventory.append(snacks['FIZZY BUBBLECH'])

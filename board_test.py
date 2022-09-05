@@ -16,3 +16,6 @@ for x in rows:
     print(coord)
     print(board_items[coord])
 '''
+
+# loop so add to 2d list
+# loop over 2d list 2 add to gui

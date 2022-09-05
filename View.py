@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import *
 from Controller import GameController
-from Model import Character, Snack, character, snacks, questions
+from Model import Character, Snack, character, snacks, questions, rows, columns
 
 # set up app, main window
 app = QApplication()
@@ -22,20 +22,36 @@ top_hbox = QHBoxLayout()
 bottom_hbox = QHBoxLayout()
 
 # add board to TOP LEFT
-board = QListWidget()
-top_hbox.addWidget(board)
+board_main_widget = QWidget()
+board_main_vbox = QVBoxLayout()
+board_main_widget.setLayout(board_main_vbox)
+board_grid_layout = QGridLayout()
+
+board_widget = QWidget()
+board_widget.setMinimumWidth(500)
+board_widget.setMinimumHeight(300)
+board_widget.setLayout(board_grid_layout)
+
+for row in range(0, len(rows)):
+    for column in range(0, len(columns)):
+        board_grid_layout.addWidget(QLabel(f'{str(rows[row])} : {columns[column]}'), row, column)
+
+board_main_vbox.addWidget(QLabel('BOARD'))
+board_main_vbox.addWidget(board_widget)
+
+top_hbox.addWidget(board_main_widget)
 
 # add inventory to TOP RIGHT
 character_inventory = QWidget()
 character_inventory_vbox = QVBoxLayout()
-stamina_label = QLabel(f'Stamina: {character.stamina}')
 inventory_select = QListWidget()
 inventory_select.addItems(x for x in character.inventory)
-character_inventory_vbox.addWidget(stamina_label)
-character_inventory_vbox.addWidget(QLabel('Inventory: '))
+character_inventory_vbox.addWidget(QLabel('INVENTORY'))
 character_inventory_vbox.addWidget(inventory_select)
 use_item = QPushButton('Use Item')
 character_inventory_vbox.addWidget(use_item)
+stamina_label = QLabel(f'Stamina: {character.stamina}')
+character_inventory_vbox.addWidget(stamina_label)
 character_inventory.setLayout(character_inventory_vbox)
 
 top_hbox.addWidget(character_inventory)
@@ -73,7 +89,8 @@ main_vbox.addWidget(bottom_widget)
 # connect controller
 controller = GameController(
     console, question_label, answer, submit_answer,
-    stamina_label, inventory_select, use_item #move_button
+    board_grid_layout, stamina_label, inventory_select,
+    use_item #move_button
 )
 
 controller.submit_answer.clicked.connect(
