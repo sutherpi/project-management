@@ -154,8 +154,8 @@ questions = {
 }
 
 # populate board, randomized
-rows = [x for x in range(0, 10)]
-columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
+columns = [x for x in range(0, 10)]
+rows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
 board = {}
 
 for row in range(0, len(rows)):
@@ -163,9 +163,7 @@ for row in range(0, len(rows)):
         coord = f'{rows[row]} : {columns[column]}'
         board[coord] = ''
 
-for i in range(0, len(rows)):
-    print(i)
-
+print(board['A : 1'])
 # practice
 '''
 for snack in snacks:

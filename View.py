@@ -34,7 +34,7 @@ board_widget.setLayout(board_grid_layout)
 
 for row in range(0, len(rows)):
     for column in range(0, len(columns)):
-        board_grid_layout.addWidget(QLabel(f'{str(rows[row])} : {columns[column]}'), row, column)
+        board_grid_layout.addWidget(QLabel(f'{rows[row]} : {str(columns[column])}'), row, column)
 
 board_main_vbox.addWidget(QLabel('BOARD'))
 board_main_vbox.addWidget(board_widget)
