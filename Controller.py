@@ -1,6 +1,4 @@
 from dataclasses import dataclass
-from inspect import CORO_CLOSED
-from msilib.schema import Billboard
 from multiprocessing.connection import answer_challenge
 from PySide6.QtWidgets import *
 from Model import Character, Snack, character, snacks, questions, rows, columns
@@ -10,6 +8,7 @@ class GameController():
     ''' a controller for events + connections
     within GUI/View.py
     '''
+    character: Character
     console: QLabel
     question_label: QLabel
     answer: QComboBox
@@ -18,6 +17,7 @@ class GameController():
     stamina_label: QLabel
     inventory_select: QListWidget
     use_item: QPushButton
+    app: QApplication
     #move_button = QPushButton
 
     def update_console(self):
@@ -28,7 +28,15 @@ class GameController():
 
     def update_stamina(self):
         ' updates stamina label when depleted/items used '
-        self.stamina_label.setText(f'Stamina: {character.stamina}')
+        # loss condition if stamina less than 0
+        if self.character.stamina <= -1:
+            QMessageBox(QMessageBox.Icon.Critical, 'GAME LOST',
+            'Stamina is below zero. Game lost :(.').exec()
+
+            self.app.exit()
+
+        self.stamina_label.setText(f'Stamina: {self.character.stamina}')
+
 
     def submit_answer_clicked(self, checked: bool):
         ' submits answer in qcheckbox row '
@@ -55,9 +63,13 @@ class GameController():
                     QMessageBox.Icon.Information, 'Answer correct!',
                     f'\'{user_answer}\' is the correct answer.').exec()
             else:
+                # update stamina
+                self.character.stamina -= 1
+                self.update_stamina()
+
                 QMessageBox(
                     QMessageBox.Icon.Information, 'Answer incorrect.',
-                    f'\'{user_answer}\' is the wrong answer.').exec()
+                    f'\'{user_answer}\' is the wrong answer. \n STAMINA -1.').exec()
 
 
     def inventory_select_currentRowChanged(self):

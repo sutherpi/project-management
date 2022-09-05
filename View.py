@@ -88,9 +88,9 @@ main_vbox.addWidget(bottom_widget)
 
 # connect controller
 controller = GameController(
-    console, question_label, answer, submit_answer,
+    character, console, question_label, answer, submit_answer,
     board_grid_layout, stamina_label, inventory_select,
-    use_item #move_button
+    use_item, app #move_button
 )
 
 controller.submit_answer.clicked.connect(

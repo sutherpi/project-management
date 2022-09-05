@@ -5,7 +5,6 @@ import random
 class Character:
     _inventory: list
     _stamina: int = 20 # max stamina
-    _status: str = 'GAME ACTIVE'
 
     @property
     def inventory(self) -> list:
@@ -25,10 +24,7 @@ class Character:
     @stamina.setter
     def stamina(self, new_stamina: int):
         ' set new stamina '
-        if new_stamina >= 0:
-            self._stamina = new_stamina
-        else:
-            self.status = 'GAME LOST'
+        self._stamina = new_stamina
 
     # stamina replenishment goes here
     def eat(self, snack):
@@ -38,12 +34,6 @@ class Character:
         if self.stamina > 20:
             self.stamina = 20
         print(f'stamina + {snack.regen}! New stamina: {self.stamina}')
-
-    # stamina hit goes here
-    def tire(self):
-        ' deplete user\'s stamina when move '
-        if self.stamina >= 0:
-            self.stamina -= 1
 
 
 @dataclass
@@ -154,8 +144,8 @@ questions = {
 }
 
 # populate board, randomized
-columns = [x for x in range(0, 10)]
-rows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
+rows = [x for x in range(0, 10)]
+columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
 board = {}
 
 for row in range(0, len(rows)):
@@ -163,7 +153,7 @@ for row in range(0, len(rows)):
         coord = f'{rows[row]} : {columns[column]}'
         board[coord] = ''
 
-print(board['A : 1'])
+print(board['1 : A'])
 # practice
 '''
 for snack in snacks:
