@@ -140,3 +140,4 @@ controller.submit_answer.clicked.connect(
 main_window.show()
 app.exec()
 
+

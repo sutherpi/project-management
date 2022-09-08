@@ -171,4 +171,4 @@ for snack in snacks:
 
 # practice adding 2 inventory
 #character.inventory.append(snacks['FIZZY BUBBLECH'])
-#print(character.inventory[0].name)
+#print(character.inventory[0].name
