@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import *
 from Controller import GameController
-from Model import Character, Snack, character, snacks, questions, rows, columns, movies
+from Model import Character, Snack, character, snacks, questions, rows, columns, movies, directions
 
 # set up app, main window
 app = QApplication()
@@ -44,12 +44,14 @@ top_hbox.addWidget(board_main_widget)
 # add inventory, movies list to TOP RIGHT
 top_right_widget = QWidget()
 top_right_layout = QHBoxLayout()
+top_hbox.addWidget(top_right_widget)
 
 movies_stamina = QWidget()
 movies_stamina_layout = QVBoxLayout()
 
 movies_widget = QListWidget()
 movies_widget.addItems(x for x in movies)
+movies_stamina_layout.addWidget(QLabel('MOVIES TO COLLECT'))
 movies_stamina_layout.addWidget(movies_widget)
 
 stamina_label = QLabel(f'Stamina: {character.stamina}')
@@ -66,19 +68,33 @@ character_inventory_vbox.addWidget(use_item)
 
 character_inventory.setLayout(character_inventory_vbox)
 
+movies_stamina.setLayout(movies_stamina_layout)
 top_right_layout.addWidget(movies_stamina)
 top_right_layout.addWidget(character_inventory)
 top_right_widget.setLayout(top_right_layout)
-top_hbox.addWidget(top_right_widget)
 
-# add console msg to BOTTOM LEFT
+# create bottom widget
 bottom_widget = QWidget()
 bottom_hbox = QHBoxLayout()
-console = QLabel('ITEM/CONSOLE')
 
-bottom_hbox.addWidget(console)
+# create bottom left widget
+bottom_left_widget = QWidget()
+bottom_left_layout = QVBoxLayout()
+
+move_widget = QComboBox()
+move_widget.addItems(x for x in directions)
+move_widget.setMaximumWidth(150)
+console = QLabel('ITEM/CONSOLE')
+bottom_left_layout.addWidget(move_widget)
+bottom_left_layout.addWidget(console)
+
+bottom_left_widget.setLayout(bottom_left_layout)
+bottom_hbox.addWidget(bottom_left_widget)
 
 # add question to BOTTOM RIGHT
+bottom_right_widget = QWidget()
+bottom_right_layout = QHBoxLayout()
+
 question = QWidget()
 question_vbox = QVBoxLayout()
 question_label = QLabel(questions['You Don\'t Mess With the Zohan'].question)
@@ -90,8 +106,16 @@ question_vbox.addWidget(question_label)
 question_vbox.addWidget(answer)
 question_vbox.addWidget(submit_answer)
 question.setLayout(question_vbox)
+question.setMinimumWidth(595)
 
-bottom_hbox.addWidget(question)
+bottom_right_layout.addWidget(question)
+image_label = QLabel('IMAGE GOES HERE')
+image_label.setMaximumWidth(150)
+bottom_right_layout.addWidget(image_label)
+bottom_right_widget.setLayout(bottom_right_layout)
+
+# add image
+bottom_hbox.addWidget(bottom_right_widget)
 
 # set top/bottom widget layouts
 top_widget.setLayout(top_hbox)

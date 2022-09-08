@@ -148,6 +148,8 @@ questions = {
     ['The US Army', 'Spam', 'Wholefoods', 'Popeye\'s'], 'Wholefoods')
 }
 
+directions = ['MOVE LEFT', 'MOVE RIGHT', 'MOVE UP', 'MOVE DOWN']
+
 # populate board, randomized
 rows = [x for x in range(0, 10)]
 columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
