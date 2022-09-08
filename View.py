@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import *
 from Controller import GameController
-from Model import Character, Snack, character, snacks, questions, rows, columns
+from Model import Character, Snack, character, snacks, questions, rows, columns, movies
 
 # set up app, main window
 app = QApplication()
@@ -41,7 +41,20 @@ board_main_vbox.addWidget(board_widget)
 
 top_hbox.addWidget(board_main_widget)
 
-# add inventory to TOP RIGHT
+# add inventory, movies list to TOP RIGHT
+top_right_widget = QWidget()
+top_right_layout = QHBoxLayout()
+
+movies_stamina = QWidget()
+movies_stamina_layout = QVBoxLayout()
+
+movies_widget = QListWidget()
+movies_widget.addItems(x for x in movies)
+movies_stamina_layout.addWidget(movies_widget)
+
+stamina_label = QLabel(f'Stamina: {character.stamina}')
+movies_stamina_layout.addWidget(stamina_label)
+
 character_inventory = QWidget()
 character_inventory_vbox = QVBoxLayout()
 inventory_select = QListWidget()
@@ -50,11 +63,13 @@ character_inventory_vbox.addWidget(QLabel('INVENTORY'))
 character_inventory_vbox.addWidget(inventory_select)
 use_item = QPushButton('Use Item')
 character_inventory_vbox.addWidget(use_item)
-stamina_label = QLabel(f'Stamina: {character.stamina}')
-character_inventory_vbox.addWidget(stamina_label)
+
 character_inventory.setLayout(character_inventory_vbox)
 
-top_hbox.addWidget(character_inventory)
+top_right_layout.addWidget(movies_stamina)
+top_right_layout.addWidget(character_inventory)
+top_right_widget.setLayout(top_right_layout)
+top_hbox.addWidget(top_right_widget)
 
 # add console msg to BOTTOM LEFT
 bottom_widget = QWidget()

@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from multiprocessing.connection import answer_challenge
 from PySide6.QtWidgets import *
-from Model import Character, Snack, character, snacks, questions, rows, columns
+from Model import Character, Snack, character, snacks, questions, rows, columns, movies
 
 @dataclass
 class GameController():

@@ -90,6 +90,11 @@ snacks = {
 
 character = Character([])
 
+movies = ['50 First Dates', 'Grown Ups', 'Grown Ups 2',
+'Click', 'The Longest Yard', 'Big Daddy', 'Blended',
+'You Don\'t Mess With the Zohan', 'The Wedding Singer',
+'Hotel Transylvania']
+
 # questions - no. as key, obj as item
 questions = {
     '50 First Dates': Question(
