@@ -7,6 +7,7 @@ class GameController():
     ''' a controller for events + connections
     within GUI/View.py
     '''
+    app: QApplication
     character: Character
     console: QLabel
     question_label: QLabel
@@ -16,8 +17,8 @@ class GameController():
     stamina_label: QLabel
     inventory_select: QListWidget
     use_item: QPushButton
-    app: QApplication
-    #move_button = QPushButton
+    move_combobox: QComboBox
+    move_button: QPushButton
 
     def update_console(self):
         ''' update console msgs based on:
@@ -25,8 +26,9 @@ class GameController():
         '''
         self.console.setText('''''')
 
+
     def update_stamina(self):
-        ' updates stamina label when depleted/items used '
+        ''' updates stamina label when depleted/items used '''
         # loss condition if stamina less than 0
         if self.character.stamina <= -1:
             QMessageBox(QMessageBox.Icon.Critical, 'GAME LOST',
@@ -37,8 +39,33 @@ class GameController():
         self.stamina_label.setText(f'Stamina: {self.character.stamina}')
 
 
+    # move row changed
+    # 
+
+
+    # move button click
+    def move_button_clicked(self, checked: bool):
+        ''' user moves based on combobox direction '''
+        move_combobox_index = self.move_combobox.currentIndex()
+
+        # check selected direction isn't '-'
+        if move_combobox_index != 0:
+            print(directions[move_combobox_index - 1])
+        else:
+            QMessageBox(QMessageBox.Icon.Critical, 'Error: empty input',
+            'Please select a direction to move!').exec()
+
+
+    # use item click
+    def use_item_clicked(self, checked: bool):
+        ''' uses item + replenishes user's stamina '''
+        inventory_index = self.inventory_select.currentIndex()
+        print(self.character.inventory_names)
+
+
+    # submit answer click
     def submit_answer_clicked(self, checked: bool):
-        ' submits answer in qcheckbox row '
+        ''' submits answer in qcheckbox row '''
         answer_index = self.answer.currentIndex()
 
         # check whether input is empty
@@ -69,11 +96,5 @@ class GameController():
                 QMessageBox(
                     QMessageBox.Icon.Information, 'Answer incorrect.',
                     f'\'{user_answer}\' is the wrong answer. \n STAMINA -1.').exec()
-
-
-    def inventory_select_currentRowChanged(self):
-        ' update console based on item selected '
-        pass
-
 
 

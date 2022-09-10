@@ -4,17 +4,31 @@ import random
 @dataclass
 class Character:
     _inventory: list
+    _inventory_names: list
     _stamina: int = 20 # max stamina
 
     @property
     def inventory(self) -> list:
         ' return inventory member '
         return self._inventory
+
+    @property
+    def inventory_names(self) -> list:
+        ' return inventory names '
+        return self._inventory_names
     
     @inventory.setter
     def inventory(self, new_inventory: list):
         ' set new inventory value '
-        self.inventory = new_inventory
+        self._inventory = new_inventory
+
+        inventory_names = []
+        inventory_names.append(x.name for x in new_inventory)
+
+    @inventory_names.setter
+    def inventory_names(self, new_inventory_names):
+        ' set new inventory names '
+        self._inventory_names = new_inventory_names
 
     @property
     def stamina(self) -> int:
@@ -41,6 +55,7 @@ class Snack:
     _name: str
     _regen: int
     _count: int
+    _msg: str
 
     @property
     def name(self) -> str:
@@ -57,12 +72,23 @@ class Snack:
         ' return num. of item '
         return self._count
 
+    @property
+    def msg(self) -> str:
+        ' return console message '
+        return self._msg
+
 
 @dataclass
 class Question:
+    _name: str # movie name
     _question: str
     _options: list
     _answer: str
+
+    @property
+    def title(self) -> str:
+        ' return movie title / N/A (could make subclass shut up) '
+        return self._title
 
     @property
     def question(self) -> str:
@@ -82,13 +108,17 @@ class Question:
 
 # setup snacks/powerups, character, Q/As, board
 snacks = {
-    'FIZZY BUBBLECH': Snack('FIZZY BUBBLECH', 10, 1),
-    'DILL PICKLE': Snack('DILL PICKLE', 1, 10),
-    'NYC BAGEL': Snack('NYC BAGEL', 5, 3),
-    'MYSTERY CHEESE': Snack('MYSTERY CHEESE', 1, 5)
+    'FIZZY BUBBLECH': Snack('FIZZY BUBBLECH', 10, 1,
+    'With great joy, you imbibe the FIZZY BUBBLECH. *brrp prp* *bfp*'),
+    'DILL PICKLE': Snack('DILL PICKLE', 1, 10,
+    'Like a snake, you swallow DILL PICKLE whole. Rejuvenated, you gain'),
+    'NYC BAGEL': Snack('NYC BAGEL', 5, 3,
+    'I <3 NY!!!!!!!!!!!! NYC BAGEL consumed.'),
+    'MYSTERY CHEESE': Snack('MYSTERY CHEESE', 1, 5,
+    'You eat the MYSTERY CHEESE. It\'s okay.')
 }
 
-character = Character([])
+character = Character([], [])
 
 movies = ['50 First Dates', 'Grown Ups', 'Grown Ups 2',
 'Click', 'The Longest Yard', 'Big Daddy', 'Blended',
@@ -97,53 +127,60 @@ movies = ['50 First Dates', 'Grown Ups', 'Grown Ups 2',
 
 # questions - no. as key, obj as item
 questions = {
-    '50 First Dates': Question(
+    '50 First Dates': Question('50 First Dates',
         'How many first dates does Sandler go on in this movie?',
         ['3', '50', 'None', '30'], '50'),
-    'Grown Ups': Question(
+    'Grown Ups': Question('Grown Ups',
         'In Grown Ups, who plays Sandler’s love interest?',
         ['Salma Haylek', 'Drew Barrymore','Adam Sandler', 'Gwyneth Paltrow'],
         'Salma Haylek'),
-    'Grown Ups 2': Question(
+    'Grown Ups 2': Question('Grown Ups 2',
         'How many years apart were the releases of Grown ups 1 and 2?',
         ['10', '4', '3', '5'], '3'),
-    'Click': Question('Click is often compared to which movie?',
+    'Click': Question('Click',
+    'Click is often compared to which movie?',
     ['Back to the Future', 'The Truman Show',
     'Almost Famous', 'The Disaster Artist'], 'Back to the Future'),
-    'The Longest Yard': Question(
+    'The Longest Yard': Question('The Longest Yard',
         'The Longest Yard was set in a prison called:',
         ['Allenville Penitentiary', 'Alcatraz',
         'Avenal State Prison', 'Louisiana State Penitentiary'],
         'Allenville Penitentiary'),
-    'Big Daddy': Question('When was Big Daddy released?',
+    'Big Daddy': Question('Big Daddy',
+    'When was Big Daddy released?',
         ['2001', '1997', '1999', '1998'], '1999'),
-    'Blended': Question('What is the premise of this movie?',
+    'Blended': Question('Blended',
+    'What is the premise of this movie?',
     ['Sandler works as a Vitamix salesman',
     'Sandler is stuck at a resort with another family',
     'Sandler’s family reunion over Thanksgiving',
     'Sandler pursues a DJ career in New York'],
     'Sandler is stuck at a resort with another family'),
     'You Don\'t Mess With the Zohan': Question(
+        'You Don\'t Mess With the Zohan',
         'What is Sandler’s favourite drink in this movie?',
         ['Fizzy Bubblech', 'Seltzer', 'Beer', 'Rosewater'], 'Fizzy Bubblech'),
-    'The Wedding Singer': Question('In The Wedding Singer, Sandler lives in:',
+    'The Wedding Singer': Question('The Wedding Singer',
+    'In The Wedding Singer, Sandler lives in:',
     ['Canada', 'Washington', 'New York', 'New Jersey'], 'New Jersey'),
     'Hotel Transylvania': Question(
+        'Hotel Transylvania',
         'Which character does Sandler play in Hotel Transylvania?',
         ['Murray the Mummy', 'Uncle Brian', 'Dracula', 'Wayne'], 'Dracula'),
-    'DOB': Question('What is Adam’s date of birth?',
+    'DOB': Question('N/A', 'What is Adam’s date of birth?',
     ['9/03/1966', '9/04/1966', '10/03/1968', '11/04/1968'],
     '9/09/1966'),
-    'Height': Question('How tall is Adam Sandler?',
+    'Height': Question('N/A', 'How tall is Adam Sandler?',
     ['1.8m', '1.82m', '1.79m', '1.77m'], '1.77m'),
-    'False': Question('Which of these is false?\n\nAdam sandler:',
+    'False': Question('N/A', 
+    'Which of these is false?\n\nAdam sandler:',
     ['Was shortlisted for the role of Willy Wonka',
     'Held a funeral for his dog Meatball',
     'Was previously married to Drew Barrymore', 'Starred on The Cosby Show'],
     'Was previously married to Drew Barrymore'),
-    'Eyes': Question('What is Adam’s eye colour?',
+    'Eyes': Question('N/A', 'What is Adam’s eye colour?',
     ['Brown', 'Black', 'Hazel', 'Dark Brown'], 'Dark Brown'),
-    'Companies': Question(
+    'Companies': Question('N/A',
         'Which of these products/companies does not appear in one of Sandler’s films?',
     ['The US Army', 'Spam', 'Wholefoods', 'Popeye\'s'], 'Wholefoods')
 }
@@ -160,7 +197,6 @@ for row in range(0, len(rows)):
         coord = f'{rows[row]} : {columns[column]}'
         board[coord] = ''
 
-print(board['1 : A'])
 # practice
 '''
 for snack in snacks:
@@ -168,7 +204,3 @@ for snack in snacks:
     snack = snacks[snack]
 
     print(f'{snack.name} consumed! Your Stamina is now: {snack.regen + character.stamina}\n')'''
-
-# practice adding 2 inventory
-#character.inventory.append(snacks['FIZZY BUBBLECH'])
-#print(character.inventory[0].name

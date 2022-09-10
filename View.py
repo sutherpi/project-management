@@ -60,6 +60,7 @@ movies_stamina_layout.addWidget(stamina_label)
 character_inventory = QWidget()
 character_inventory_vbox = QVBoxLayout()
 inventory_select = QListWidget()
+character.inventory.append(snacks['NYC BAGEL'].name)
 inventory_select.addItems(x for x in character.inventory)
 character_inventory_vbox.addWidget(QLabel('INVENTORY'))
 character_inventory_vbox.addWidget(inventory_select)
@@ -81,10 +82,21 @@ bottom_hbox = QHBoxLayout()
 bottom_left_widget = QWidget()
 bottom_left_layout = QVBoxLayout()
 
-move_widget = QComboBox()
-move_widget.addItems(x for x in directions)
-move_widget.setMaximumWidth(150)
+move_widget = QWidget()
+move_layout = QHBoxLayout()
+move_widget.setLayout(move_layout)
+
+move_combobox = QComboBox()
+move_combobox.addItem('-')
+move_combobox.addItems(x for x in directions)
+move_button = QPushButton('Move')
+move_button.setMaximumWidth(75)
+move_widget.setMaximumWidth(225)
+move_layout.addWidget(move_combobox)
+move_layout.addWidget(move_button)
+
 console = QLabel('ITEM/CONSOLE')
+
 bottom_left_layout.addWidget(move_widget)
 bottom_left_layout.addWidget(console)
 
@@ -127,13 +139,19 @@ main_vbox.addWidget(bottom_widget)
 
 # connect controller
 controller = GameController(
-    character, console, question_label, answer, submit_answer,
+    app, character, console, question_label, answer, submit_answer,
     board_grid_layout, stamina_label, inventory_select,
-    use_item, app #move_button
+    use_item, move_combobox, move_button
 )
 
 controller.submit_answer.clicked.connect(
     controller.submit_answer_clicked
+)
+controller.use_item.clicked.connect(
+    controller.use_item_clicked
+)
+controller.move_button.clicked.connect(
+    controller.move_button_clicked
 )
 
 # execute app
