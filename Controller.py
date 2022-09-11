@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from PySide6.QtWidgets import *
-from Model import Character, Snack, character, snacks, questions, rows, columns, movies, directions
+from Model import Character, Snack, Question, character, snacks, questions, rows, columns, movies, directions
 
 @dataclass
 class GameController():
@@ -59,9 +59,39 @@ class GameController():
     # use item click
     def use_item_clicked(self, checked: bool):
         ''' uses item + replenishes user's stamina '''
-        inventory_index = self.inventory_select.currentIndex()
-        print(self.character.inventory_names)
+        # create list of names
+        names = []
+        for x in self.character.inventory:
+            names.append(x.name)
+        
+        print(self.inventory_select.currentItem())
 
+        # get text from inventory item
+        # check if an item was connected
+        if self.inventory_select.currentItem() == None:
+            QMessageBox(QMessageBox.Icon.Critical, 'Error: no item selected',
+            'Select an item to use!').exec()
+        else:
+            item = self.inventory_select.currentItem().text()
+
+            if item in questions.keys():
+                QMessageBox(QMessageBox.Icon.Critical, 'Error: can\'t use item',
+                f'{item} is not consumable!').exec()
+
+            elif item in snacks.keys():
+                # get obj, value so can access stamina
+                item_index = names.index(item)
+                item = self.character.inventory[item_index]
+                # remove item from inventory, update list widget
+                self.character.inventory.remove(
+                    item)
+                self.inventory_select.clear()
+                self.inventory_select.addItems(x.name for x in character.inventory)
+                self.character.eat(item)
+                self.update_stamina()
+
+                QMessageBox(QMessageBox.Icon.Information, 'Item used',
+                f'{item.name} used. + {item.regen} stamina!').exec()
 
     # submit answer click
     def submit_answer_clicked(self, checked: bool):

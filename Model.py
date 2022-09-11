@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 import random
+from sys import settrace
 
 @dataclass
 class Character:
@@ -20,15 +21,16 @@ class Character:
     @inventory.setter
     def inventory(self, new_inventory: list):
         ' set new inventory value '
-        self._inventory = new_inventory
+        self.inventory = new_inventory
 
-        inventory_names = []
-        inventory_names.append(x.name for x in new_inventory)
-
+        '''self.inventory_names = []
+        for x in self.inventory:
+            self.inventory_names.append(x.name)'''
+    
     @inventory_names.setter
-    def inventory_names(self, new_inventory_names):
-        ' set new inventory names '
-        self._inventory_names = new_inventory_names
+    def inventory_names(self, new_inventory_names: list):
+        ' set new inventory names value '
+        self.inventory_names = new_inventory_names
 
     @property
     def stamina(self) -> int:
@@ -84,6 +86,11 @@ class Question:
     _question: str
     _options: list
     _answer: str
+
+    @property
+    def name(self) -> str:
+        ' return name of movie 4 inventory widget '
+        return self._name
 
     @property
     def title(self) -> str:

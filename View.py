@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import *
 from Controller import GameController
-from Model import Character, Snack, character, snacks, questions, rows, columns, movies, directions
+from Model import Character, Snack, Question, character, snacks, questions, rows, columns, movies, directions
 
 # set up app, main window
 app = QApplication()
@@ -52,6 +52,7 @@ movies_stamina_layout = QVBoxLayout()
 movies_widget = QListWidget()
 movies_widget.addItems(x for x in movies)
 movies_stamina_layout.addWidget(QLabel('MOVIES TO COLLECT'))
+
 movies_stamina_layout.addWidget(movies_widget)
 
 stamina_label = QLabel(f'Stamina: {character.stamina}')
@@ -60,8 +61,10 @@ movies_stamina_layout.addWidget(stamina_label)
 character_inventory = QWidget()
 character_inventory_vbox = QVBoxLayout()
 inventory_select = QListWidget()
-character.inventory.append(snacks['NYC BAGEL'].name)
-inventory_select.addItems(x for x in character.inventory)
+character.inventory.append(snacks['NYC BAGEL'])
+character.inventory.append(snacks['NYC BAGEL'])
+character.inventory.append(questions['Click'])
+inventory_select.addItems(x.name for x in character.inventory)
 character_inventory_vbox.addWidget(QLabel('INVENTORY'))
 character_inventory_vbox.addWidget(inventory_select)
 use_item = QPushButton('Use Item')
