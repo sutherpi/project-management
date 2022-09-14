@@ -142,12 +142,12 @@ def move_up(coord):
 
     # check isnt topmost
     if row != rows[0]:
-        new_row = row - 1
+        new_row = rows[rows.index(row) - 1]
         new_coord = f'{new_row} : {column}'
         print(f'moved up from {coord} to {new_coord}.')
         
     else:
-        print(f'Cannot move up - {coord} is already at top of board.')
+        print(f'Cannot move up - {coord} is already at edge of board.')
 
 
 # move right
@@ -173,13 +173,14 @@ def move_down(coord):
 
     # check isnt topmost
     if row != rows[-1]:
-        new_row = row + 1
+        new_row = rows[rows.index(row) + 1]
         new_coord = f'{new_row} : {column}'
         print(f'moved down from {coord} to {new_coord}.')
         
     else:
-        print(f'Cannot move down - {coord} is already at bottom of board.')
+        print(f'Cannot move down - {coord} is already at edge of board.')
 
+move_down(location)
 
 # move left
 def move_left(coord):
@@ -194,3 +195,5 @@ def move_left(coord):
         print(f'moved left from {coord} to {new_coord}.')
     else:
         print(f'Cannot move left - {coord} is already at edge of board.')
+
+move_left(location)
