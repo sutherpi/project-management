@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import *
 from Controller import GameController
-from Model import Character, Snack, Question, character, snacks, questions, rows, columns, movies, directions
+from Model import Character, Snack, Question, character, snacks, questions, rows, columns, movies, directions, location, board_items
 
 # set up app, main window
 app = QApplication()
@@ -98,7 +98,7 @@ move_widget.setMaximumWidth(225)
 move_layout.addWidget(move_combobox)
 move_layout.addWidget(move_button)
 
-console = QLabel('ITEM/CONSOLE')
+console = QLabel(f'YOU ARE LOCATED AT:   [ {location} ]')
 
 bottom_left_layout.addWidget(move_widget)
 bottom_left_layout.addWidget(console)
@@ -142,7 +142,7 @@ main_vbox.addWidget(bottom_widget)
 
 # connect controller
 controller = GameController(
-    app, character, console, question_label, answer, submit_answer,
+    app, location, board_items, character, console, question_label, answer, submit_answer,
     board_grid_layout, stamina_label, inventory_select,
     use_item, move_combobox, move_button
 )

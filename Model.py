@@ -1,12 +1,12 @@
 from dataclasses import dataclass
-import random
+from random import *
 from sys import settrace
 
 @dataclass
 class Character:
     _inventory: list
     _inventory_names: list
-    _stamina: int = 20 # max stamina
+    _stamina: int = 20.0 # max stamina
 
     @property
     def inventory(self) -> list:
@@ -49,7 +49,6 @@ class Character:
         # check stamina isn't over max
         if self.stamina > 20:
             self.stamina = 20
-        print(f'stamina + {snack.regen}! New stamina: {self.stamina}')
 
 
 @dataclass
@@ -197,9 +196,47 @@ directions = ['MOVE LEFT', 'MOVE RIGHT', 'MOVE UP', 'MOVE DOWN']
 # populate board, randomized
 rows = [x for x in range(0, 10)]
 columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
-board = {}
+board = []
 
-for row in range(0, len(rows)):
-    for column in range(0, len(columns)):
-        coord = f'{rows[row]} : {columns[column]}'
-        board[coord] = ''
+for x in rows:
+    for y in columns:
+        coord = f'{str(x)} : {y}'
+        board.append(coord)
+
+# fill da board
+def fill_board():
+    ''' fill board w/ randomized snacks, start, questions'''
+    # create items list 2 fill board with
+    items = ['X'] # location of character
+
+    for snack in snacks:
+        for i in range(0, snacks[snack].count):
+            items.append(snack)
+
+    for question in questions:
+        items.append(question)
+
+    # add empty slots 2 items
+    no_empty_slots = len(board) - len(items)
+    for i in range(0, no_empty_slots):
+        items.append('')
+    # randomise order via shuffle
+    shuffle(items)
+    # fill board via dictionary!
+    board_items = {}
+    for coord in board:
+        # add coord w/ corresponding item (match list indices)
+        board_items[coord] = items[board.index(coord)]
+
+    return board_items
+
+
+board_items = fill_board()
+
+# ID start point
+location = 'X : Y'
+
+for key in board_items:
+    for item in board_items[key]:
+        if item == 'X':
+            location = key
