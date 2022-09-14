@@ -1,29 +1,36 @@
-from PySide6.QtWidgets import *
-from Controller import GameController
-from board_test import board, board_items
+from ast import Num
 
-# set up app, main window
-app = QApplication()
-main_window = QMainWindow()
 
-main_widget = QWidget()
-main_window.setCentralWidget(main_widget)
-hbox = QHBoxLayout()
-main_widget.setLayout(hbox)
+directions = ['MOVE LEFT', 'MOVE RIGHT', 'MOVE UP', 'MOVE DOWN']
 
-board_grid = QWidget()
-grid = QGridLayout()
-board_grid.setLayout(grid)
+rows = [(x for x in range(0, 3))]
+columns = ['A', 'B', 'C']
 
-rows = [x for x in range(0, 10)]
-columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
+board = ['0 : A', '0 : B', '0 : C', '1 : A', '1 : B', '1 : C', '2 : A', '2 : B', '2 : C']
 
-for row in range(0, len(rows)):
-    for column in range(0, len(columns)):
-        grid.addWidget(QLabel(f'{str(rows[row])}:{columns[column]}'), row, column)
+for coord in board:
 
-hbox.addWidget(board_grid)
+direction = 'MOVE LEFT'
 
-# execute app
-main_window.show()
-app.exec()
+def move(direction, coord):
+    row = coord[0]
+    column = coord[4]
+
+    if direction == 'MOVE LEFT':
+        # check not @ left of board
+        if row != rows[0]:
+            new_row = row - 1
+            new_coord = f'{new_row} : {column}'
+        else:
+            print(f'Cannot {direction.lower()} - {} would be out ')
+    elif direction == 'MOVE RIGHT':
+        # check not @ right of board
+        if row != rows[-1]:
+            new_row = row + 1
+        
+    elif direction == 'MOVE UP':
+
+    elif direction == 'MOVE DOWN':
+
+
+move(direction, '0 : A')

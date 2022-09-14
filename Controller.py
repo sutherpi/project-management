@@ -40,7 +40,7 @@ class GameController():
 
 
     # move row changed
-    # 
+    
 
 
     # move button click
@@ -50,7 +50,9 @@ class GameController():
 
         # check selected direction isn't '-'
         if move_combobox_index != 0:
-            print(directions[move_combobox_index - 1])
+            direction = directions[move_combobox_index - 1]
+            print(directions[1])
+            self.console.setText(f'You {direction.lower()} from X:Y to X:Y')
         else:
             QMessageBox(QMessageBox.Icon.Critical, 'Error: empty input',
             'Please select a direction to move!').exec()
@@ -83,13 +85,14 @@ class GameController():
                 item_index = names.index(item)
                 item = self.character.inventory[item_index]
                 # remove item from inventory, update list widget
-                self.character.inventory.remove(
-                    item)
+                self.character.inventory.remove(item)
                 self.inventory_select.clear()
-                self.inventory_select.addItems(x.name for x in character.inventory)
+                self.inventory_select.addItems(
+                    x.name for x in character.inventory)
+
                 self.character.eat(item)
                 self.update_stamina()
-
+                self.console.setText(f'{item.msg}')
                 QMessageBox(QMessageBox.Icon.Information, 'Item used',
                 f'{item.name} used. + {item.regen} stamina!').exec()
 

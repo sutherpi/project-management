@@ -203,11 +203,3 @@ for row in range(0, len(rows)):
     for column in range(0, len(columns)):
         coord = f'{rows[row]} : {columns[column]}'
         board[coord] = ''
-
-# practice
-'''
-for snack in snacks:
-    # access object via str key
-    snack = snacks[snack]
-
-    print(f'{snack.name} consumed! Your Stamina is now: {snack.regen + character.stamina}\n')'''
