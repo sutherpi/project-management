@@ -61,9 +61,7 @@ movies_stamina_layout.addWidget(stamina_label)
 character_inventory = QWidget()
 character_inventory_vbox = QVBoxLayout()
 inventory_select = QListWidget()
-character.inventory.append(snacks['NYC BAGEL'])
-character.inventory.append(snacks['NYC BAGEL'])
-character.inventory.append(questions['Click'])
+
 inventory_select.addItems(x.name for x in character.inventory)
 character_inventory_vbox.addWidget(QLabel('INVENTORY'))
 character_inventory_vbox.addWidget(inventory_select)
@@ -98,7 +96,16 @@ move_widget.setMaximumWidth(225)
 move_layout.addWidget(move_combobox)
 move_layout.addWidget(move_button)
 
-console = QLabel(f'YOU ARE LOCATED AT:   [ {location} ]')
+console = QLabel(
+    f'''Hey! Welcome to SANDLERSEARCH! This is an educational game about Adam Sandler. 
+
+SANDLERSEARCH takes place in your musty living room on a boring, lonely night. 
+Desperate for company, you decide to embark on a Sandlerthon.
+
+You must find all 10 Sandler films in order to begin your movie marathon!!!
+
+YOU ARE LOCATED AT:   [ {location} ]''')
+
 
 bottom_left_layout.addWidget(move_widget)
 bottom_left_layout.addWidget(console)
@@ -110,9 +117,11 @@ bottom_hbox.addWidget(bottom_left_widget)
 bottom_right_widget = QWidget()
 bottom_right_layout = QHBoxLayout()
 
+empty_widget = QStackedWidget() #
+
 question = QWidget()
 question_vbox = QVBoxLayout()
-question_label = QLabel(questions['You Don\'t Mess With the Zohan'].question)
+question_label = QLabel()
 answer = QComboBox()
 answer.addItem('-')
 answer.addItems(x for x in questions['You Don\'t Mess With the Zohan'].options)

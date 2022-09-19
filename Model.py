@@ -21,7 +21,7 @@ class Character:
     @inventory.setter
     def inventory(self, new_inventory: list):
         ' set new inventory value '
-        self.inventory = new_inventory
+        self._inventory = new_inventory
 
         '''self.inventory_names = []
         for x in self.inventory:

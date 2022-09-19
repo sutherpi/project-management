@@ -42,10 +42,6 @@ class GameController():
         self.stamina_label.setText(f'Stamina: {self.character.stamina}')
 
 
-    # move row changed
-    
-
-
     # move button click
     def move_button_clicked(self, checked: bool):
         ''' user moves based on combobox direction '''
@@ -108,6 +104,12 @@ class GameController():
                         console_msg += (f'\n\nQuestion found!' +
                         ' Please answer the question to the right.')
 
+                        # set question text
+                        self.question_label.setText(questions[item].question)
+                        self.answer.clear()
+                        self.answer.addItem('-')
+                        self.answer.addItems(x for x in (questions[item].options))
+
                     elif item in snacks.keys():
                         character.inventory.append(snacks[item])
                         self.inventory_select.clear()
@@ -116,9 +118,10 @@ class GameController():
 
                         console_msg += (f'\n\nSnack - {item}' +
                         ' found! Added to inventory.')
-                        self.board_items[coord] = ''
+                        self.board_items[new_coord] = ''
                     else:
                         pass
+                        # set widget as empty
 
                     self.update_console(console_msg)
                 
@@ -176,6 +179,7 @@ class GameController():
     def submit_answer_clicked(self, checked: bool):
         ''' submits answer in qcheckbox row '''
         answer_index = self.answer.currentIndex()
+        question_index = self.question_label
 
         # check whether input is empty
         if answer_index == 0:
@@ -200,13 +204,24 @@ class GameController():
 
                 # remove question from board items, add movie to inventory
                 # + check whether all movies are in inventory
-                #
-                # self.board_items[self.location] = ''
+                self.board_items[self.location] = ''
                 self.character.inventory.append(questions['You Don\'t Mess With the Zohan'])
 
                 self.inventory_select.clear()
                 self.inventory_select.addItems(
                     x.name for x in self.character.inventory)
+
+                def win_check(self, inventory):
+                    check = []
+                    
+                    for x in character.inventory:
+                        if x.name in movies:
+                            check.append(x.name)
+                        if check == movies:
+                            QMessageBox(QMessageBox.Icon.Information, 'Game won!',
+                            'Congrats! You\'ve found all the movies you need!!!!!')
+                
+                win_check(character.inventory)
 
             else:
                 # update stamina
