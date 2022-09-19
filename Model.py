@@ -118,9 +118,9 @@ snacks = {
     'With great joy, you imbibe the FIZZY BUBBLECH. *brrp prp* *bfp*'),
     'DILL PICKLE': Snack('DILL PICKLE', 1, 10,
     'Like a snake, you swallow DILL PICKLE whole. Rejuvenated, you gain'),
-    'NYC BAGEL': Snack('NYC BAGEL', 5, 3,
+    'NYC BAGEL': Snack('NYC BAGEL', 5, 5,
     'I <3 NY!!!!!!!!!!!! NYC BAGEL consumed.'),
-    'MYSTERY CHEESE': Snack('MYSTERY CHEESE', 1, 5,
+    'MYSTERY CHEESE': Snack('MYSTERY CHEESE', 5, 5,
     'You eat the MYSTERY CHEESE. It\'s okay.')
 }
 
@@ -174,7 +174,7 @@ questions = {
         'Which character does Sandler play in Hotel Transylvania?',
         ['Murray the Mummy', 'Uncle Brian', 'Dracula', 'Wayne'], 'Dracula'),
     'DOB': Question('N/A', 'What is Adam’s date of birth?',
-    ['9/03/1966', '9/04/1966', '10/03/1968', '11/04/1968'],
+    ['9/03/1966', '9/09/1966', '10/03/1968', '11/04/1968'],
     '9/09/1966'),
     'Height': Question('N/A', 'How tall is Adam Sandler?',
     ['1.8m', '1.82m', '1.79m', '1.77m'], '1.77m'),

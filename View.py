@@ -124,7 +124,6 @@ question_vbox = QVBoxLayout()
 question_label = QLabel()
 answer = QComboBox()
 answer.addItem('-')
-answer.addItems(x for x in questions['You Don\'t Mess With the Zohan'].options)
 submit_answer = QPushButton('SUBMIT ANSWER')
 question_vbox.addWidget(question_label)
 question_vbox.addWidget(answer)
@@ -165,6 +164,8 @@ controller.use_item.clicked.connect(
 controller.move_button.clicked.connect(
     controller.move_button_clicked
 )
+
+print(board_items)
 
 # execute app
 main_window.show()

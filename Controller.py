@@ -101,6 +101,9 @@ class GameController():
                     item = self.board_items[new_coord]
 
                     if item in questions.keys():
+                        global question
+
+                        question = item
                         console_msg += (f'\n\nQuestion found!' +
                         ' Please answer the question to the right.')
 
@@ -179,7 +182,6 @@ class GameController():
     def submit_answer_clicked(self, checked: bool):
         ''' submits answer in qcheckbox row '''
         answer_index = self.answer.currentIndex()
-        question_index = self.question_label
 
         # check whether input is empty
         if answer_index == 0:
@@ -189,14 +191,11 @@ class GameController():
         else:
             # check is answer is correct
             user_answer = questions[
-                'You Don\'t Mess With the Zohan'
+                question
                 ].options[answer_index - 1]
-            correct_answer = questions[
-                'You Don\'t Mess With the Zohan'
-                ].answer
 
             if user_answer == questions[
-                'You Don\'t Mess With the Zohan'
+                question
                 ].answer:
                 QMessageBox(
                     QMessageBox.Icon.Information, 'Answer correct!',
@@ -205,23 +204,25 @@ class GameController():
                 # remove question from board items, add movie to inventory
                 # + check whether all movies are in inventory
                 self.board_items[self.location] = ''
-                self.character.inventory.append(questions['You Don\'t Mess With the Zohan'])
 
-                self.inventory_select.clear()
-                self.inventory_select.addItems(
-                    x.name for x in self.character.inventory)
+                if questions[question].name != 'N/A':
+                    self.character.inventory.append(questions[question])
 
-                def win_check(self, inventory):
-                    check = []
+                    self.inventory_select.clear()
+                    self.inventory_select.addItems(
+                        x.name for x in self.character.inventory)
+
+                    def win_check(inventory: list):
+                        check = []
+                        
+                        for x in character.inventory:
+                            if x.name in movies:
+                                check.append(x.name)
+                            if check == movies:
+                                QMessageBox(QMessageBox.Icon.Information, 'Game won!',
+                                'Congrats! You\'ve found all the movies you need!!!!!').exec()
                     
-                    for x in character.inventory:
-                        if x.name in movies:
-                            check.append(x.name)
-                        if check == movies:
-                            QMessageBox(QMessageBox.Icon.Information, 'Game won!',
-                            'Congrats! You\'ve found all the movies you need!!!!!')
-                
-                win_check(character.inventory)
+                    win_check(self.character.inventory)
 
             else:
                 # update stamina
