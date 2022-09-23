@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 from PySide6.QtWidgets import *
 from Model import Character, Snack, Question, character, snacks, questions, rows, columns, movies, directions, board_items, location
+from PySide6.QtGui import QPixmap
+import os
 
 @dataclass
 class GameController():
@@ -13,6 +15,7 @@ class GameController():
     character: Character
     console: QLabel
     question_label: QLabel
+    image_label: QLabel
     answer: QComboBox
     submit_answer: QPushButton
     board_grid_layout: QGridLayout
@@ -109,8 +112,22 @@ class GameController():
 
                         # set question text
                         self.question_label.setText(questions[item].question)
+
+                        def pixmap_filename(name) -> str:
+                            return '{}.png'.format(name.replace(' ', '_').lower())
+                        
+                        def load_photo(name, label: QLabel):
+                            ''' displays product photo in qlabel!!!! '''
+                            # path 2 python file where pictures are
+                            path = os.path.dirname(os.path.abspath(__file__))
+                            pixmap = QPixmap(os.path.join(
+                                path, pixmap_filename(name))).scaledToHeight(100)
+
+                            label.setPixmap(pixmap)
+
                         self.answer.clear()
                         self.answer.addItem('-')
+                        load_photo(questions[item].name, self.image_label)
                         self.answer.addItems(x for x in (questions[item].options))
 
                     elif item in snacks.keys():

@@ -1,6 +1,8 @@
 from PySide6.QtWidgets import *
 from Controller import GameController
 from Model import Character, Snack, Question, character, snacks, questions, rows, columns, movies, directions, location, board_items
+from PySide6.QtGui import QPixmap
+import os
 
 # set up app, main window
 app = QApplication()
@@ -150,9 +152,9 @@ main_vbox.addWidget(bottom_widget)
 
 # connect controller
 controller = GameController(
-    app, location, board_items, character, console, question_label, answer, submit_answer,
-    board_grid_layout, stamina_label, inventory_select,
-    use_item, move_combobox, move_button
+    app, location, board_items, character, console, question_label, 
+    image_label, answer, submit_answer, board_grid_layout, stamina_label,
+    inventory_select, use_item, move_combobox, move_button
 )
 
 controller.submit_answer.clicked.connect(
