@@ -134,7 +134,7 @@ question.setLayout(question_vbox)
 question.setMinimumWidth(595)
 
 bottom_right_layout.addWidget(question)
-image_label = QLabel('IMAGE GOES HERE')
+image_label = QLabel('')
 image_label.setMaximumWidth(150)
 bottom_right_layout.addWidget(image_label)
 bottom_right_widget.setLayout(bottom_right_layout)

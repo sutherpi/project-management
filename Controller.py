@@ -244,8 +244,6 @@ class GameController():
                             '''Congrats! You\'ve found all the movies you need!!\n
 Click OK to close window.''').exec()
                             self.app.exit()
-
-                        print(check, movies)
                     
                     win_check(self.character.inventory)
 
