@@ -123,8 +123,10 @@ class GameController():
                         ' found! Added to inventory.')
                         self.board_items[new_coord] = ''
                     else:
-                        pass
                         # set widget as empty
+                        self.question_label.setText('')
+                        self.answer.clear()
+                        self.answer.addItems('-')
 
                     self.update_console(console_msg)
                 
@@ -147,8 +149,6 @@ class GameController():
         names = []
         for x in self.character.inventory:
             names.append(x.name)
-        
-        print(self.inventory_select.currentItem())
 
         # get text from inventory item
         # check if an item was connected
@@ -204,6 +204,9 @@ class GameController():
                 # remove question from board items, add movie to inventory
                 # + check whether all movies are in inventory
                 self.board_items[self.location] = ''
+                self.question_label.setText('')
+                self.answer.clear()
+                self.answer.addItem('-')
 
                 if questions[question].name != 'N/A':
                     self.character.inventory.append(questions[question])
@@ -215,12 +218,17 @@ class GameController():
                     def win_check(inventory: list):
                         check = []
                         
-                        for x in character.inventory:
+                        for x in inventory:
                             if x.name in movies:
                                 check.append(x.name)
-                            if check == movies:
-                                QMessageBox(QMessageBox.Icon.Information, 'Game won!',
-                                'Congrats! You\'ve found all the movies you need!!!!!').exec()
+                        
+                        if len(check) == len(movies):
+                            QMessageBox(QMessageBox.Icon.Information, 'Game won!',
+                            '''Congrats! You\'ve found all the movies you need!!\n
+Click OK to close window.''').exec()
+                            self.app.exit()
+
+                        print(check, movies)
                     
                     win_check(self.character.inventory)
 

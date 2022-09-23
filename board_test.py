@@ -5,8 +5,6 @@ from random import *
 
 character.inventory = [questions[x] for x in questions]
 
-print(character.inventory)
-
 check = []
 
 for x in character.inventory:

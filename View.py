@@ -165,8 +165,6 @@ controller.move_button.clicked.connect(
     controller.move_button_clicked
 )
 
-print(board_items)
-
 # execute app
 main_window.show()
 app.exec()
