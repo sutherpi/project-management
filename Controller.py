@@ -31,7 +31,7 @@ class GameController():
         # path 2 python file where pictures are
         path = os.path.dirname(os.path.abspath(__file__))
         pixmap = QPixmap(os.path.join(
-            path, '{}.png'.format(name.replace(' ', '_').lower()))).scaledToHeight(100)
+            path, '{}.png'.format(name.replace(' ', '_').lower()))).scaledToHeight(175)
 
         label.setPixmap(pixmap)
 

@@ -182,19 +182,18 @@ app.setStyleSheet('''
         background-color: #F7F8FC;
     }
 
-    QLabel {
-        color: #0F1316;
-        font-weight:bold;
-    }
-
     QPushButton {
         background-color: #F58D40;
         font-weight: regular;
     }
 ''')
 
-board_widget.setStyleSheet('border: 1px solid #F58D40')
-
+board_widget.setStyleSheet('border: 1px solid #F58D40; font: 10px')
+bottom_widget.setStyleSheet('font:13px;')
+top_widget.setStyleSheet('''QLabel {
+        color: #0F1316;
+        font: bold 14px;
+    }''')
 
 current_tile = board_grid_layout.itemAtPosition(0, 0)
 
