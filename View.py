@@ -185,11 +185,19 @@ app.setStyleSheet('''
     QPushButton {
         background-color: #F58D40;
         font-weight: regular;
+        border: 2px solid #F58D40;
+    }
+
+    QListWidget {
+        border: .3px solid white;
     }
 ''')
 
 board_widget.setStyleSheet('border: 1px solid #F58D40; font: 10px')
-bottom_widget.setStyleSheet('font:13px;')
+bottom_widget.setStyleSheet('''font:13px;
+QComboBox {
+    border: 2px solid #CCE8FF
+    }''')
 top_widget.setStyleSheet('''QLabel {
         color: #0F1316;
         font: bold 14px;
