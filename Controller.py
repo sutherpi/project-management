@@ -14,6 +14,7 @@ class GameController():
     board_items: dict
     character: Character
     console: QLabel
+    question: QWidget
     question_label: QLabel
     image_label: QLabel
     answer: QComboBox
@@ -117,6 +118,7 @@ class GameController():
                         question = item
                         console_msg += (f'\n\nQuestion found!' +
                         ' Please answer the question to the right.')
+                        self.question.setHidden(False)
 
                         # set question text
                         self.question_label.setText(questions[item].question)
@@ -129,8 +131,8 @@ class GameController():
                     elif item in snacks.keys():
                         self.question_label.setText('')
                         character.inventory.append(snacks[item])
-                        self.answer.clear()
-                        self.answer.addItems('-')
+
+                        self.question.setHidden(True)
                         self.load_photo('N/A', self.image_label)
                         self.inventory_select.clear()
                         self.inventory_select.addItems(
@@ -141,9 +143,7 @@ class GameController():
                         self.board_items[new_coord] = ''
                     else:
                         # set widget as empty
-                        self.question_label.setText('')
-                        self.answer.clear()
-                        self.answer.addItems('-')
+                        self.question.setHidden(True)
                         self.load_photo('N/A', self.image_label)
 
                     self.update_console(console_msg)
@@ -222,10 +222,8 @@ class GameController():
                 # remove question from board items, add movie to inventory
                 # + check whether all movies are in inventory
                 self.board_items[self.location] = ''
-                self.question_label.setText('')
+                self.question.setHidden(True)
                 self.load_photo('N/A', self.image_label)
-                self.answer.clear()
-                self.answer.addItem('-')
 
                 if questions[question].name != 'N/A':
                     self.character.inventory.append(questions[question])

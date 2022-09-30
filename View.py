@@ -150,9 +150,11 @@ bottom_widget.setLayout(bottom_hbox)
 main_vbox.addWidget(top_widget)
 main_vbox.addWidget(bottom_widget)
 
-# connect controller
+# connect controller, set question widget hidden
+question.setHidden(True)
+
 controller = GameController(
-    app, location, board_items, character, console, question_label, 
+    app, location, board_items, character, console, question, question_label, 
     image_label, answer, submit_answer, board_grid_layout, stamina_label,
     inventory_select, use_item, move_combobox, move_button
 )

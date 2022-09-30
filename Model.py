@@ -117,7 +117,7 @@ snacks = {
     'FIZZY BUBBLECH': Snack('FIZZY BUBBLECH', 10, 1,
     'With great joy, you imbibe the FIZZY BUBBLECH. *brrp prp* *bfp*'),
     'DILL PICKLE': Snack('DILL PICKLE', 1, 10,
-    'Like a snake, you swallow DILL PICKLE whole. Rejuvenated, you gain'),
+    'Like a snake, you swallow the DILL PICKLE whole. Rejuvenated, you gain 1 stamina.'),
     'NYC BAGEL': Snack('NYC BAGEL', 5, 5,
     'I <3 NY!!!!!!!!!!!! NYC BAGEL consumed.'),
     'MYSTERY CHEESE': Snack('MYSTERY CHEESE', 5, 5,
