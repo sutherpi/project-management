@@ -25,6 +25,14 @@ class GameController():
     move_combobox: QComboBox
     move_button: QPushButton
 
+    def load_photo(self, name, label: QLabel):
+        ''' displays product photo in qlabel!!!! '''
+        # path 2 python file where pictures are
+        path = os.path.dirname(os.path.abspath(__file__))
+        pixmap = QPixmap(os.path.join(
+            path, '{}.png'.format(name.replace(' ', '_').lower()))).scaledToHeight(100)
+
+        label.setPixmap(pixmap)
 
     def update_console(self, msg):
         ''' update console msgs based on:
@@ -113,25 +121,17 @@ class GameController():
                         # set question text
                         self.question_label.setText(questions[item].question)
 
-                        def pixmap_filename(name) -> str:
-                            return '{}.png'.format(name.replace(' ', '_').lower())
-                        
-                        def load_photo(name, label: QLabel):
-                            ''' displays product photo in qlabel!!!! '''
-                            # path 2 python file where pictures are
-                            path = os.path.dirname(os.path.abspath(__file__))
-                            pixmap = QPixmap(os.path.join(
-                                path, pixmap_filename(name))).scaledToHeight(100)
-
-                            label.setPixmap(pixmap)
-
                         self.answer.clear()
                         self.answer.addItem('-')
-                        load_photo(questions[item].name, self.image_label)
+                        self.load_photo(questions[item].name, self.image_label)
                         self.answer.addItems(x for x in (questions[item].options))
 
                     elif item in snacks.keys():
+                        self.question_label.setText('')
                         character.inventory.append(snacks[item])
+                        self.answer.clear()
+                        self.answer.addItems('-')
+                        self.load_photo('N/A', self.image_label)
                         self.inventory_select.clear()
                         self.inventory_select.addItems(
                             x.name for x in character.inventory)
@@ -144,9 +144,10 @@ class GameController():
                         self.question_label.setText('')
                         self.answer.clear()
                         self.answer.addItems('-')
+                        self.load_photo('N/A', self.image_label)
 
                     self.update_console(console_msg)
-                
+
                 return new_coord
 
 
@@ -222,6 +223,7 @@ class GameController():
                 # + check whether all movies are in inventory
                 self.board_items[self.location] = ''
                 self.question_label.setText('')
+                self.load_photo('N/A', self.image_label)
                 self.answer.clear()
                 self.answer.addItem('-')
 

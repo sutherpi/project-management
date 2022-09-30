@@ -24,10 +24,17 @@ poo_layout = QHBoxLayout()
 poo_layout.addWidget(QLabel('10'))
 main_widget.setLayout(main_layout)
 
-def button_clicked_connect(checked: bool):
-    bottom_widget.setLayout(boob_layout)
+count = 0
 
-button.clicked.connect(button_clicked_connect)
+def button_clicked_connect(checked: bool, count):
+    count += 1
+
+    if count % 2 == 0:
+        bottom_widget.setLayout(poo_layout)
+    else:
+        bottom_widget.setLayout(boob_layout)
+
+count = button.clicked.connect(button_clicked_connect(button.isChecked(), count))
 
 # execute app
 main_window.show()
