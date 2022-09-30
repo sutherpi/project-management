@@ -148,6 +148,12 @@ class GameController():
 
                     self.update_console(console_msg)
 
+                print(new_coord[0], new_coord[4])
+                print(rows.index(int(new_coord[0])), columns.index(new_coord[4]))
+
+                print(self.board_grid_layout.itemAtPosition(
+                    rows.index(int(new_coord[0])),
+                    columns.index(new_coord[4])))
                 return new_coord
 
 

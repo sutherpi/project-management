@@ -34,11 +34,18 @@ board_widget.setMinimumWidth(500)
 board_widget.setMinimumHeight(300)
 board_widget.setLayout(board_grid_layout)
 
+# construct board, 2d list to change stylesheet
+board_2d_list = [[] for x in range(0, len(rows))]
+
 for row in range(0, len(rows)):
     for column in range(0, len(columns)):
-        board_grid_layout.addWidget(QLabel(f'{rows[row]} : {str(columns[column])}'), row, column)
+        board_2d_list[row].append(f'{rows[row]} : {str(columns[column])}')
+        new_widget = QLabel(f'{rows[row]} : {str(columns[column])}')
+        board_grid_layout.addWidget(new_widget, row, column)
 
-board_main_vbox.addWidget(QLabel('BOARD'))
+
+board_label = QLabel('BOARD')
+board_main_vbox.addWidget(board_label)
 board_main_vbox.addWidget(board_widget)
 
 top_hbox.addWidget(board_main_widget)
@@ -53,7 +60,8 @@ movies_stamina_layout = QVBoxLayout()
 
 movies_widget = QListWidget()
 movies_widget.addItems(x for x in movies)
-movies_stamina_layout.addWidget(QLabel('MOVIES TO COLLECT'))
+movies_label = QLabel('MOVIES TO COLLECT')
+movies_stamina_layout.addWidget(movies_label)
 
 movies_stamina_layout.addWidget(movies_widget)
 
@@ -65,7 +73,8 @@ character_inventory_vbox = QVBoxLayout()
 inventory_select = QListWidget()
 
 inventory_select.addItems(x.name for x in character.inventory)
-character_inventory_vbox.addWidget(QLabel('INVENTORY'))
+inventory_label = QLabel('INVENTORY')
+character_inventory_vbox.addWidget(inventory_label)
 character_inventory_vbox.addWidget(inventory_select)
 use_item = QPushButton('Use Item')
 character_inventory_vbox.addWidget(use_item)
@@ -119,8 +128,6 @@ bottom_hbox.addWidget(bottom_left_widget)
 bottom_right_widget = QWidget()
 bottom_right_layout = QHBoxLayout()
 
-empty_widget = QStackedWidget() #
-
 question = QWidget()
 question_vbox = QVBoxLayout()
 question_label = QLabel()
@@ -168,6 +175,21 @@ controller.use_item.clicked.connect(
 controller.move_button.clicked.connect(
     controller.move_button_clicked
 )
+
+# set styles
+app.setStyleSheet('''
+    QMainWindow {
+        background-color: white;
+    }
+
+    QLabel {
+        color: blue;
+    }
+''')
+
+
+current_tile = board_grid_layout.itemAtPosition(0, 0)
+
 
 # execute app
 main_window.show()
