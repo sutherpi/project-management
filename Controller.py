@@ -154,7 +154,7 @@ class GameController():
                 widget = self.board_grid_layout.itemAtPosition(
                     rows.index(int(new_coord[0])),
                     columns.index(new_coord[4]))
-                widget.setStyleSheet('background-color: blue;')
+                #widget.setStyleSheet('background-color: blue;')
                 return new_coord
 
 

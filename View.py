@@ -179,13 +179,21 @@ controller.move_button.clicked.connect(
 # set styles
 app.setStyleSheet('''
     QMainWindow {
-        background-color: white;
+        background-color: #F7F8FC;
     }
 
     QLabel {
-        color: blue;
+        color: #0F1316;
+        font-weight:bold;
+    }
+
+    QPushButton {
+        background-color: #F58D40;
+        font-weight: regular;
     }
 ''')
+
+board_widget.setStyleSheet('border: 1px solid #F58D40')
 
 
 current_tile = board_grid_layout.itemAtPosition(0, 0)
