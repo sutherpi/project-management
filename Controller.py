@@ -50,6 +50,10 @@ class GameController():
             'Stamina is below zero. Game lost :(').exec()
 
             self.app.exit()
+        elif self.character.stamina < 5:
+            self.stamina_label.setStyleSheet('color: red;')
+        elif self.character.stamina < 10:
+            self.stamina_label.setStyleSheet('color: orange;')
 
         self.stamina_label.setText(f'Stamina: {self.character.stamina}')
 

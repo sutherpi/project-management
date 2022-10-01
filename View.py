@@ -182,11 +182,7 @@ app.setStyleSheet('''
         background-color: #F7F8FC;
     }
 
-    QPushButton {
-        background-color: #F58D40;
-        font-weight: regular;
-        border: 2px solid #F58D40;
-    }
+
 
     QListWidget {
         border: .3px solid white;
@@ -194,14 +190,26 @@ app.setStyleSheet('''
 ''')
 
 board_widget.setStyleSheet('border: 1px solid #F58D40; font: 10px')
-bottom_widget.setStyleSheet('''font:13px;
+bottom_widget.setStyleSheet('''QLabel{ font:13px;}
+
 QComboBox {
     border: 2px solid #CCE8FF
-    }''')
+    }
+QPushButton {
+    background-color: #F58D40;
+    font-weight: regular;
+    border: 2px solid #F58D40;
+}''')
 top_widget.setStyleSheet('''QLabel {
         color: #0F1316;
         font: bold 14px;
-    }''')
+    }
+QPushButton {
+    background-color: #F58D40;
+    font-weight: regular;
+    border: 2px solid #F58D40;
+}''')
+stamina_label.setStyleSheet('color: green;')
 
 current_tile = board_grid_layout.itemAtPosition(0, 0)
 
