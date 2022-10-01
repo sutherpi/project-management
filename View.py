@@ -162,7 +162,7 @@ question.setHidden(True)
 
 controller = GameController(
     app, location, board_items, character, console, question, question_label, 
-    image_label, answer, submit_answer, board_grid_layout, stamina_label,
+    image_label, answer, submit_answer, board_grid_layout, board_widget, stamina_label,
     inventory_select, use_item, move_combobox, move_button
 )
 
@@ -181,8 +181,6 @@ app.setStyleSheet('''
     QMainWindow {
         background-color: #F7F8FC;
     }
-
-
 
     QListWidget {
         border: .3px solid white;

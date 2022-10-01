@@ -20,6 +20,7 @@ class GameController():
     answer: QComboBox
     submit_answer: QPushButton
     board_grid_layout: QGridLayout
+    board_widget: QWidget
     stamina_label: QLabel
     inventory_select: QListWidget
     use_item: QPushButton
@@ -155,10 +156,20 @@ class GameController():
                 print(new_coord[0], new_coord[4])
                 print(rows.index(int(new_coord[0])), columns.index(new_coord[4]))
 
-                widget = self.board_grid_layout.itemAtPosition(
+                tile = self.board_grid_layout.itemAtPosition(
                     rows.index(int(new_coord[0])),
                     columns.index(new_coord[4]))
-                #widget.setStyleSheet('background-color: blue;')
+                tilewidget = tile.widget()
+                self.board_widget.setStyleSheet('''
+                tilewidget {
+                    background-color: blue;
+                }
+
+                QLabel {
+                    background-color: red;
+                }
+                '''
+                )
                 return new_coord
 
 
