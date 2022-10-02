@@ -11,6 +11,7 @@ class GameController():
     '''
     app: QApplication
     location: str
+    moves: int
     board_items: dict
     character: Character
     console: QLabel
@@ -55,8 +56,25 @@ class GameController():
             self.stamina_label.setStyleSheet('color: red;')
         elif self.character.stamina < 10:
             self.stamina_label.setStyleSheet('color: orange;')
+        else:
+            self.stamina_label.setStyleSheet('color: green;')
 
         self.stamina_label.setText(f'Stamina: {self.character.stamina}')
+
+
+    def tile_change_style(self, new_coord):
+        ''' changes tile colour 2 show user where they are '''
+        # reset stylesheet
+        self.board_widget.setStyleSheet('border: 1px solid #F58D40; font: 10px; background-color: white;')
+
+        # change tile style
+        tile = self.board_grid_layout.itemAtPosition(
+        rows.index(int(new_coord[0])),
+        columns.index(new_coord[4]))
+        tile.widget().setStyleSheet('''
+        background-color: #F58D40;
+        border: 1px solid #F58D40;
+        font: 10px;''')
 
 
     # move button click
@@ -108,11 +126,22 @@ class GameController():
                     ).exec()
                 else:
                     # update stamina, labels, tell user
+                    self.moves += 1
                     self.character.stamina -= 0.5
                     self.update_stamina()
 
                     console_msg = (f'You {direction.lower()} from' +
                     f' [ {coord} ] to [ {new_coord} ].')
+
+                    # update position on board
+                    previous_tile = self.board_grid_layout.itemAtPosition(
+                        rows.index(int(coord[0])),
+                        columns.index(coord[4])).widget()
+                    previous_tile.setStyleSheet('''
+                    border: 1px solid #F58D40;
+                    font: 10px;''')
+                    self.tile_change_style(new_coord)
+
 
                     # check item
                     item = self.board_items[new_coord]
@@ -153,25 +182,7 @@ class GameController():
 
                     self.update_console(console_msg)
 
-                print(new_coord[0], new_coord[4])
-                print(rows.index(int(new_coord[0])), columns.index(new_coord[4]))
-
-                tile = self.board_grid_layout.itemAtPosition(
-                    rows.index(int(new_coord[0])),
-                    columns.index(new_coord[4]))
-                tilewidget = tile.widget()
-                self.board_widget.setStyleSheet('''
-                tilewidget {
-                    background-color: blue;
-                }
-
-                QLabel {
-                    background-color: red;
-                }
-                '''
-                )
                 return new_coord
-
 
             # set new location
             new_coord = move(direction, self.location)
@@ -263,7 +274,8 @@ class GameController():
                         
                         if len(check) == len(movies):
                             QMessageBox(QMessageBox.Icon.Information, 'Game won!',
-                            '''Congrats! You\'ve found all the movies you need!!\n
+                            f'''Congrats! You\'ve found all the movies you need!!
+                            Game completed in {self.moves} moves.\n
 Click OK to close window.''').exec()
                             self.app.exit()
                     

@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import *
 from Controller import GameController
-from Model import Character, Snack, Question, character, snacks, questions, rows, columns, movies, directions, location, board_items
+from Model import Character, Snack, Question, character, snacks, questions, rows, columns, movies, directions, location, board_items, moves
 from PySide6.QtGui import QPixmap
 import os
 
@@ -161,8 +161,9 @@ main_vbox.addWidget(bottom_widget)
 question.setHidden(True)
 
 controller = GameController(
-    app, location, board_items, character, console, question, question_label, 
-    image_label, answer, submit_answer, board_grid_layout, board_widget, stamina_label,
+    app, location, moves, board_items, character, console,
+    question, question_label, image_label, answer, submit_answer,
+    board_grid_layout, board_widget, stamina_label,
     inventory_select, use_item, move_combobox, move_button
 )
 
@@ -188,17 +189,20 @@ app.setStyleSheet('''
 ''')
 
 board_widget.setStyleSheet('border: 1px solid #F58D40; font: 10px')
-bottom_widget.setStyleSheet('''QLabel{ font:13px;}
-
+bottom_widget.setStyleSheet('''
+QLabel {
+    font: 13px;
+    }
 QComboBox {
     border: 2px solid #CCE8FF
     }
 QPushButton {
     background-color: #F58D40;
     font-weight: regular;
-    border: 2px solid #F58D40;
+    border: 4px solid #F58D40;
 }''')
-top_widget.setStyleSheet('''QLabel {
+top_widget.setStyleSheet('''
+QLabel {
         color: #0F1316;
         font: bold 14px;
     }
@@ -209,8 +213,13 @@ QPushButton {
 }''')
 stamina_label.setStyleSheet('color: green;')
 
-current_tile = board_grid_layout.itemAtPosition(0, 0)
-
+tile = board_grid_layout.itemAtPosition(
+    rows.index(int(location[0])),
+    columns.index(location[4]))
+tile.widget().setStyleSheet('''
+    background-color: #F58D40;
+    border: 1px solid #F58D40;
+    font: 10px;''')
 
 # execute app
 main_window.show()

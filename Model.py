@@ -240,3 +240,5 @@ for key in board_items:
     for item in board_items[key]:
         if item == 'X':
             location = key
+
+moves = 0
