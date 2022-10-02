@@ -34,12 +34,9 @@ board_widget.setMinimumWidth(500)
 board_widget.setMinimumHeight(300)
 board_widget.setLayout(board_grid_layout)
 
-# construct board, 2d list to change stylesheet
-board_2d_list = [[] for x in range(0, len(rows))]
-
+# construct board
 for row in range(0, len(rows)):
     for column in range(0, len(columns)):
-        board_2d_list[row].append(f'{rows[row]} : {str(columns[column])}')
         new_widget = QLabel(f'{rows[row]} : {str(columns[column])}')
         board_grid_layout.addWidget(new_widget, row, column)
 
