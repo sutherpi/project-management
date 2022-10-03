@@ -185,7 +185,8 @@ app.setStyleSheet('''
     }
 ''')
 
-board_widget.setStyleSheet('border: 1px solid #F58D40; font: 10px')
+board_widget.setStyleSheet('''border: 1px solid #9CC8EB;
+font: 10px;''')
 bottom_widget.setStyleSheet('''
 QLabel {
     font: 13px;
@@ -194,9 +195,10 @@ QComboBox {
     border: 2px solid #CCE8FF
     }
 QPushButton {
-    background-color: #F58D40;
+    background-color: #CCE8FF;
     font-weight: regular;
-    border: 4px solid #F58D40;
+    border: 1px solid #61A6FF;
+    padding: 2px;
 }''')
 top_widget.setStyleSheet('''
 QLabel {
@@ -204,9 +206,10 @@ QLabel {
         font: bold 14px;
     }
 QPushButton {
-    background-color: #F58D40;
+    background-color: #CCE8FF;
     font-weight: regular;
-    border: 2px solid #F58D40;
+    border: 1px solid #61A6FF;
+    padding: 2px;
 }''')
 stamina_label.setStyleSheet('color: green;')
 
@@ -214,8 +217,8 @@ tile = board_grid_layout.itemAtPosition(
     rows.index(int(location[0])),
     columns.index(location[4]))
 tile.widget().setStyleSheet('''
-    background-color: #F58D40;
-    border: 1px solid #F58D40;
+    background-color: #F2A18F;
+    border: 1px solid #D94A4A;
     font: 10px;''')
 
 # execute app
