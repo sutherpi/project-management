@@ -191,7 +191,6 @@ questions = {
     ['The US Army', 'Spam', 'Wholefoods', 'Popeye\'s'], 'Wholefoods')
 }
 
-directions = ['MOVE LEFT', 'MOVE RIGHT', 'MOVE UP', 'MOVE DOWN']
 
 # populate board, randomized
 rows = [x for x in range(0, 10)]
@@ -202,6 +201,12 @@ for x in rows:
     for y in columns:
         coord = f'{str(x)} : {y}'
         board.append(coord)
+
+directions = {
+    'MOVE LEFT': [columns, 0, -1],
+    'MOVE RIGHT': [columns, -1, 1],
+    'MOVE UP': [rows, 0, -1],
+    'MOVE DOWN': [rows, -1, 1]}
 
 # fill da board
 def fill_board():

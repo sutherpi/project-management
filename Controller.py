@@ -28,6 +28,7 @@ class GameController():
     move_combobox: QComboBox
     move_button: QPushButton
 
+
     def load_photo(self, name, label: QLabel):
         ''' displays product photo in qlabel!!!! '''
         # path 2 python file where pictures are
@@ -36,6 +37,7 @@ class GameController():
             path, '{}.png'.format(name.replace(' ', '_').lower()))).scaledToHeight(175)
 
         label.setPixmap(pixmap)
+
 
     def update_console(self, msg):
         ''' update console msgs based on:
@@ -77,45 +79,41 @@ class GameController():
         font: 10px;''')
 
 
+    def update_inventoryselect(self, inventory):
+        ''' updates inventory '''
+        self.inventory_select.clear()
+        self.inventory_select.addItems(inventory)
+
+
     # move button click
     def move_button_clicked(self, checked: bool):
         ''' user moves based on combobox direction '''
-        move_combobox_index = self.move_combobox.currentIndex()
+        direction = self.move_combobox.currentText()
 
         # check selected direction isn't '-'
-        if move_combobox_index != 0:
-            direction = directions[move_combobox_index - 1]
-            
+        if direction != '-':
             # move function
             def move(direction, coord):
                 ''' move character based on direction, given location 
                     depletes stamina by 0.5/move
                 '''
+                # items from directions dictionary via key
+                dir_items = directions[direction]
                 row = int(coord[0])
                 column = coord[4]
 
-                # check isnt at boundary
-                if direction == 'MOVE UP':
-                    if row != rows[0]:
-                        new_coord = f'{rows[rows.index(row) - 1]} : {column}'
+                if dir_items[0] == rows:
+                    # check is not @ row boundary
+                    if row != dir_items[0][dir_items[1]]:
+                        new_coord = (f'{dir_items[0][dir_items[0].index(row) + dir_items[2]]}' +
+                        f' : {column}')
                     else:
                         new_coord = coord
-
-                elif direction == 'MOVE RIGHT':
-                    if column != columns[-1]:
-                        new_coord = f'{row} : {columns[columns.index(column) + 1]}'
-                    else:
-                        new_coord = coord
-
-                elif direction == 'MOVE DOWN':
-                    if row != rows[-1]:
-                        new_coord = f'{rows[rows.index(row) + 1]} : {column}'
-                    else:
-                        new_coord = coord
-                
-                elif direction == 'MOVE LEFT':
-                    if column != columns[0]:
-                        new_coord = f'{row} : {columns[columns.index(column) - 1]}'
+                else:
+                    # check is not @ col boundary
+                    if column != dir_items[0][dir_items[1]]:
+                        new_coord = (f'{row} : ' +
+                        f'{dir_items[0][dir_items[0].index(column) + dir_items[2]]}')
                     else:
                         new_coord = coord
 
@@ -142,7 +140,6 @@ class GameController():
                     font: 10px;''')
                     self.tile_change_style(new_coord)
 
-
                     # check item
                     item = self.board_items[new_coord]
 
@@ -162,27 +159,24 @@ class GameController():
                         self.load_photo(questions[item].name, self.image_label)
                         self.answer.addItems(x for x in (questions[item].options))
 
-                    elif item in snacks.keys():
-                        self.question_label.setText('')
-                        character.inventory.append(snacks[item])
-
-                        self.question.setHidden(True)
-                        self.load_photo('N/A', self.image_label)
-                        self.inventory_select.clear()
-                        self.inventory_select.addItems(
-                            x.name for x in character.inventory)
-
-                        console_msg += (f'\n\nSnack - {item}' +
-                        ' found! Added to inventory.')
-                        self.board_items[new_coord] = ''
                     else:
-                        # set widget as empty
+                        # no question on tile, hide photo/question widget
                         self.question.setHidden(True)
                         self.load_photo('N/A', self.image_label)
+
+                        if item in snacks.keys():
+                            self.question_label.setText('')
+                            character.inventory.append(snacks[item])
+                            self.update_inventoryselect(character.inventory)
+
+                            console_msg += (f'\n\nSnack - {item}' +
+                            ' found! Added to inventory.')
+                            self.board_items[new_coord] = ''
 
                     self.update_console(console_msg)
 
                 return new_coord
+
 
             # set new location
             new_coord = move(direction, self.location)
@@ -219,15 +213,14 @@ class GameController():
                 item = self.character.inventory[item_index]
                 # remove item from inventory, update list widget
                 self.character.inventory.remove(item)
-                self.inventory_select.clear()
-                self.inventory_select.addItems(
-                    x.name for x in character.inventory)
+                self.update_inventoryselect(character.inventory)
 
                 self.character.eat(item)
                 self.update_stamina()
                 self.update_console(f'{item.msg}')
                 QMessageBox(QMessageBox.Icon.Information, 'Item used',
                 f'{item.name} used. + {item.regen} stamina!').exec()
+
 
     # submit answer click
     def submit_answer_clicked(self, checked: bool):
@@ -250,7 +243,7 @@ class GameController():
                 ].answer:
                 QMessageBox(
                     QMessageBox.Icon.Information, 'Answer correct!',
-                    f'\'{user_answer}\' is the correct answer.').exec()
+                    f'\'{user_answer}\' is the correct answer.\n').exec()
 
                 # remove question from board items, add movie to inventory
                 # + check whether all movies are in inventory
@@ -260,25 +253,26 @@ class GameController():
 
                 if questions[question].name != 'N/A':
                     self.character.inventory.append(questions[question])
-
-                    self.inventory_select.clear()
-                    self.inventory_select.addItems(
-                        x.name for x in self.character.inventory)
+                    self.update_inventoryselect(character.inventory)
 
                     def win_check(inventory: list):
                         check = []
-                        
+
                         for x in inventory:
                             if x.name in movies:
                                 check.append(x.name)
-                        
+
                         if len(check) == len(movies):
                             QMessageBox(QMessageBox.Icon.Information, 'Game won!',
                             f'''Congrats! You\'ve found all the movies you need!!
                             Game completed in {self.moves} moves.\n
 Click OK to close window.''').exec()
                             self.app.exit()
-                    
+                        else:
+                            QMessageBox(QMessageBox.Icon.Information, 'Movie added to inventory',
+                            f'''{questions[question].name} added to inventory.\n
+                            {len(movies) - len(check)} movies left to collect.''')
+
                     win_check(self.character.inventory)
 
             else:
@@ -288,6 +282,5 @@ Click OK to close window.''').exec()
 
                 QMessageBox(
                     QMessageBox.Icon.Information, 'Answer incorrect.',
-                    f'\'{user_answer}\' is the wrong answer. \n STAMINA -1.').exec()
-
+                    f'\'Try again - {user_answer}\' is the wrong answer. \n STAMINA -1.').exec()
 

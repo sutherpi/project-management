@@ -97,7 +97,7 @@ move_widget.setLayout(move_layout)
 
 move_combobox = QComboBox()
 move_combobox.addItem('-')
-move_combobox.addItems(x for x in directions)
+move_combobox.addItems(x for x in directions.keys())
 move_button = QPushButton('Move')
 move_button.setMaximumWidth(75)
 move_widget.setMaximumWidth(225)
