@@ -110,7 +110,8 @@ console = QLabel(
 SANDLERSEARCH takes place in your musty living room on a boring, lonely night. 
 Desperate for company, you decide to embark on a Sandlerthon.
 
-You must find all 10 Sandler films in order to begin your movie marathon!!!
+You must MOVE through the board to find all 10 Sandler films, and begin your movie marathon!!!
+Make sure to USE ITEMS from your INVENTORY so you don’t run out of stamina!
 
 YOU ARE LOCATED AT:   [ {location} ]''')
 
@@ -185,7 +186,7 @@ app.setStyleSheet('''
     }
 ''')
 
-board_widget.setStyleSheet('''border: 1px solid #9CC8EB;
+board_widget.setStyleSheet('''border: 1px solid #F58D40;
 font: 10px;''')
 bottom_widget.setStyleSheet('''
 QLabel {
@@ -195,9 +196,9 @@ QComboBox {
     border: 2px solid #CCE8FF
     }
 QPushButton {
-    background-color: #CCE8FF;
+    background-color: #F58D40;
     font-weight: regular;
-    border: 1px solid #61A6FF;
+    border: 1px solid #F58D40;
     padding: 2px;
 }''')
 top_widget.setStyleSheet('''
@@ -206,9 +207,9 @@ QLabel {
         font: bold 14px;
     }
 QPushButton {
-    background-color: #CCE8FF;
+    background-color: #F58D40;
     font-weight: regular;
-    border: 1px solid #61A6FF;
+    border: 1px solid #F58D40;
     padding: 2px;
 }''')
 stamina_label.setStyleSheet('color: green;')
@@ -217,8 +218,8 @@ tile = board_grid_layout.itemAtPosition(
     rows.index(int(location[0])),
     columns.index(location[4]))
 tile.widget().setStyleSheet('''
-    background-color: #F2A18F;
-    border: 1px solid #D94A4A;
+    background-color: #CCE8FF;
+    border: 1px solid #689EAD;
     font: 10px;''')
 
 # execute app

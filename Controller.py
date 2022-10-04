@@ -67,15 +67,15 @@ class GameController():
     def tile_change_style(self, new_coord):
         ''' changes tile colour 2 show user where they are '''
         # reset stylesheet
-        self.board_widget.setStyleSheet('border: 1px solid #9CC8EB; font: 10px; background-color: white;')
+        self.board_widget.setStyleSheet('border: 1px solid #F58D40; font: 10px; background-color: white;')
 
         # change tile style
         tile = self.board_grid_layout.itemAtPosition(
         rows.index(int(new_coord[0])),
         columns.index(new_coord[4]))
         tile.widget().setStyleSheet('''
-        background-color: #F2A18F;
-        border: 1px solid #D94A4A;
+        background-color: #CCE8FF;
+        border: 1px solid #689EAD;
         font: 10px;''')
 
 
@@ -136,7 +136,7 @@ class GameController():
                         rows.index(int(coord[0])),
                         columns.index(coord[4])).widget()
                     previous_tile.setStyleSheet('''
-                    border: 1px solid #9CC8EB;
+                    border: 1px solid #F58D40;
                     font: 10px;''')
                     self.tile_change_style(new_coord)
 
