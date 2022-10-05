@@ -82,7 +82,7 @@ class GameController():
     def update_inventoryselect(self, inventory):
         ''' updates inventory '''
         self.inventory_select.clear()
-        self.inventory_select.addItems(inventory)
+        self.inventory_select.addItems(x.name for x in inventory)
 
 
     # move button click
@@ -147,8 +147,6 @@ class GameController():
                         global question
 
                         question = item
-                        console_msg += (f'\n\nQuestion found!' +
-                        ' Please answer the question to the right.')
                         self.question.setHidden(False)
 
                         # set question text
@@ -159,6 +157,13 @@ class GameController():
                         self.load_photo(questions[item].name, self.image_label)
                         self.answer.addItems(x for x in (questions[item].options))
 
+                        console_msg += ('\n\nQuestion found!')
+
+                        if questions[question].name != 'N/A':
+                            console_msg += '\nAnswer the question correctly to add the movie to your inventory.'
+                        self.update_console(console_msg)
+                        QMessageBox(QMessageBox.Icon.Information, 'Question found!',
+                        'Please answer the question below.').exec()
                     else:
                         # no question on tile, hide photo/question widget
                         self.question.setHidden(True)
@@ -172,8 +177,8 @@ class GameController():
                             console_msg += (f'\n\nSnack - {item}' +
                             ' found! Added to inventory.')
                             self.board_items[new_coord] = ''
-
-                    self.update_console(console_msg)
+                        
+                        self.update_console(console_msg)
 
                 return new_coord
 
