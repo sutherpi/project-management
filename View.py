@@ -56,7 +56,7 @@ movies_stamina = QWidget()
 movies_stamina_layout = QVBoxLayout()
 
 movies_widget = QListWidget()
-movies_widget.addItems(x for x in movies)
+movies_widget.addItems(x for x in movies.keys())
 movies_label = QLabel('MOVIES TO COLLECT')
 movies_stamina_layout.addWidget(movies_label)
 
@@ -162,7 +162,7 @@ controller = GameController(
     app, location, moves, board_items, character, console,
     question, question_label, image_label, answer, submit_answer,
     board_grid_layout, board_widget, stamina_label,
-    inventory_select, use_item, move_combobox, move_button
+    inventory_select, use_item, move_combobox, move_button, movies_widget
 )
 
 controller.submit_answer.clicked.connect(

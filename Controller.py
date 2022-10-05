@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from PySide6.QtWidgets import *
 from Model import Character, Snack, Question, character, snacks, questions, rows, columns, movies, directions, board_items, location
-from PySide6.QtGui import QPixmap
+from PySide6.QtGui import QPixmap, QColor
 import os
 
 @dataclass
@@ -27,6 +27,7 @@ class GameController():
     use_item: QPushButton
     move_combobox: QComboBox
     move_button: QPushButton
+    movies_widget: QListWidget
 
 
     def load_photo(self, name, label: QLabel):
@@ -238,11 +239,12 @@ class GameController():
                 QMessageBox.Icon.Critical, 'Error: empty input',
                 'Please select an answer!').exec()
         else:
-            # check is answer is correct
+            # access answer value
             user_answer = questions[
                 question
                 ].options[answer_index - 1]
 
+            # check is answer is correct
             if user_answer == questions[
                 question
                 ].answer:
@@ -254,29 +256,41 @@ class GameController():
                 # + check whether all movies are in inventory
                 self.board_items[self.location] = ''
                 self.question.setHidden(True)
+                self.movies_widget.clear()
+
+                # add movies back 2 widget
+                for i in movies.keys():
+                    widget_item = QListWidgetItem(i)
+                    # if found, highlight
+                    if movies[i] == True:
+                        color = QColor(255, 255, 0)
+                    else:
+                        color = QColor(0, 255, 255)
+                    
+                    widget_item.setBackground(color)
+
+                    self.movies_widget.addItem(widget_item)
+
                 self.load_photo('N/A', self.image_label)
 
                 if questions[question].name != 'N/A':
                     self.character.inventory.append(questions[question])
+                    movies[questions[question].name] = True
                     self.update_inventoryselect(character.inventory)
+
 
                     def win_check(inventory: list):
                         check = []
-
-                        for x in inventory:
-                            if x.name in movies:
-                                check.append(x.name)
-
-                        if len(check) == len(movies):
+                        
+                        if all(movies[x] for x in movies.keys()) == True:
                             QMessageBox(QMessageBox.Icon.Information, 'Game won!',
                             f'''Congrats! You\'ve found all the movies you need!!
                             Game completed in {self.moves} moves.\n
 Click OK to close window.''').exec()
                             self.app.exit()
                         else:
-                            QMessageBox(QMessageBox.Icon.Information, 'Movie added to inventory',
-                            f'''{questions[question].name} added to inventory.\n
-                            {len(movies) - len(check)} movies left to collect.''')
+                            QMessageBox(QMessageBox.Icon.Information, 'Movie found!',
+                            f'''\'{questions[question].name}\' found.''').exec()
 
                     win_check(self.character.inventory)
 

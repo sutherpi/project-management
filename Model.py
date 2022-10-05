@@ -126,10 +126,10 @@ snacks = {
 
 character = Character([], [])
 
-movies = ['50 First Dates', 'Grown Ups', 'Grown Ups 2',
-'Click', 'The Longest Yard', 'Big Daddy', 'Blended',
-'You Don\'t Mess With the Zohan', 'The Wedding Singer',
-'Hotel Transylvania']
+movies = {'50 First Dates': False, 'Grown Ups': False, 'Grown Ups 2': False,
+'Click': False, 'The Longest Yard': False, 'Big Daddy': False, 'Blended': False,
+'You Don\'t Mess With the Zohan': False, 'The Wedding Singer': False,
+'Hotel Transylvania': False}
 
 # questions - no. as key, obj as item
 questions = {
